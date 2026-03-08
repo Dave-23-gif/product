@@ -1,12 +1,13 @@
 package com.dave.productapi1.mapper;
 
+import com.dave.productapi1.dto.ProductRequestDTO;
 import com.dave.productapi1.dto.ProductResponseDTO;
 import com.dave.productapi1.entity.Product;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ProductMapper {
-    public Product toEntity(ProductResponseDTO dto){
+    public Product toEntity(ProductRequestDTO dto){
         return Product.builder()
                 .name(dto.getName())
                 .description(dto.getDescription())
@@ -14,7 +15,7 @@ public class ProductMapper {
                 .quantity(dto.getQuantity())
                 .build();
     }
-    public ProductResponseDTO toDto(Product product){
+    public ProductResponseDTO toResponseDTO(Product product){
         return ProductResponseDTO.builder()
                 .id(product.getId())
                 .name(product.getName())
