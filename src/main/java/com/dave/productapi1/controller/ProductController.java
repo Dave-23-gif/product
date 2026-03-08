@@ -2,22 +2,21 @@ package com.dave.productapi1.controller;
 
 import com.dave.productapi1.dto.ProductRequestDTO;
 import com.dave.productapi1.dto.ProductResponseDTO;
-import com.dave.productapi1.entity.Product;
 import com.dave.productapi1.service.ProductService;
-import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Resource
+@RestController
 @RequestMapping("api1/products")
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
 
     @PostMapping
-    public ProductResponseDTO createProduct(@RequestBody ProductRequestDTO productRequestDTO) {
+    public ProductResponseDTO createProduct(@Valid @RequestBody ProductRequestDTO productRequestDTO) {
         return productService.createProduct(productRequestDTO);
     }
     @GetMapping
@@ -27,6 +26,13 @@ public class ProductController {
     @GetMapping("/{id}")
     public ProductResponseDTO getProductById(@RequestParam long id) {
         return productService.getProductById(id);
+    }
+    @PutMapping("/{id}")
+    public ProductResponseDTO updateProduct(
+            @PathVariable Long id,
+           @Valid @RequestBody ProductRequestDTO dto) {
+
+        return productService.updateProduct(id, dto);
     }
     @DeleteMapping("/{id}")
     public void deleteProductById(@RequestParam long id) {

@@ -35,6 +35,19 @@ public class ProductService {
 
         return productMapper.toResponseDTO(product);
     }
+    public ProductResponseDTO updateProduct(Long id, ProductRequestDTO dto) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+
+        product.setName(dto.getName());
+        product.setDescription(dto.getDescription());
+        product.setPrice(dto.getPrice());
+        product.setQuantity(dto.getQuantity());
+
+        Product updatedProduct = productRepository.save(product);
+
+        return productMapper.toResponseDTO(updatedProduct);
+    }
 
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);
